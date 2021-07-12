@@ -12,12 +12,13 @@ ADCIRC_BINDIR?=$(ROOTDIR)/ADCIRC_INSTALL
 $(call require_dir,$(ADCIRC_SRCDIR),ADCIRC source directory)
 
 # ENV for ADCIRC - exchange with NEMS ENV
-comp_option=intel                       
+comp_option=$(NEMS_COMPILER)
 
 ADCIRC_ALL_OPTS= \
   COMP_SRCDIR="$(ADCIRC_SRCDIR)" \
   COMP_BINDIR="$(ADCIRC_BINDIR)" \
-  MACHINE_ID="$(MACHINE_ID)"
+  MACHINE_ID="$(MACHINE_ID)" \
+  compiler=$(comp_option)
 
 ########################################################################
 
@@ -40,16 +41,19 @@ $(adcirc_mk): configure $(CONFDIR)/configure.nems
 
 # Rule for cleaning the SRCDIR and BINDIR:
 
-clean_ADCIRC:
+clean_ADCIRC_NUOPC:
+	+cd $(ADCIRC_SRCDIR)/thirdparty/nuopc; exec rm -f *.o *.mod
+	@echo ""
+
+distclean_ADCIRC_NUOPC: clean_ADCIRC_NUOPC
+	+cd $(ADCIRC_SRCDIR)/thirdparty/nuopc ; exec rm -f libadc_cap.a adcirc.mk
+	@echo ""
+
+clean_ADCIRC: clean_ADCIRC_NUOPC
 	+cd $(ADCIRC_SRCDIR)/work ; exec $(MAKE) -k clean
 	@echo ""
 
-distclean_ADCIRC: clean_ADCIRC
+distclean_ADCIRC: distclean_ADCIRC_NUOPC
 	+cd $(ADCIRC_SRCDIR)/work ; exec $(MAKE) -k clobber
-	rm -rf $(ADCIRC_BINDIR)
-	@echo ""
-
-distclean_NUOPC:
-	+cd $(ADCIRC_SRCDIR)/thirdparty/nuopc ; exec rm -f *.o *.mod libadc_cap.a adcirc.mk
 	rm -rf $(ADCIRC_BINDIR)
 	@echo ""

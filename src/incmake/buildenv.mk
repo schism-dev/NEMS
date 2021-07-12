@@ -60,12 +60,12 @@ endef
 # Detect available build environments.
 
 include $(call locate_incmake_file,env/app_extras/detect.mk)
-include $(call locate_incmake_file,env/wcoss/detect.mk)
-include $(call locate_incmake_file,env/rdhpcs/detect.mk)
-include $(call locate_incmake_file,env/cisl/detect.mk)
-include $(call locate_incmake_file,env/ssec/detect.mk)
-include $(call locate_incmake_file,env/intel/detect.mk)
-include $(call locate_incmake_file,env/tacc/detect.mk)
+#include $(call locate_incmake_file,env/wcoss/detect.mk)
+#include $(call locate_incmake_file,env/rdhpcs/detect.mk)
+#include $(call locate_incmake_file,env/cisl/detect.mk)
+#include $(call locate_incmake_file,env/intel/detect.mk)
+#include $(call locate_incmake_file,env/tacc/detect.mk)
+#include $(call locate_incmake_file,env/ssec/detect.mk)
 include $(call locate_incmake_file,env/uname/detect.mk)
 
 ifeq (,$(list_build_env))
@@ -124,3 +124,4 @@ MACHINE_ID_UNDER=$(subst .,_,$(MACHINE_ID))
 
 FULL_MACHINE_ID_DOT=$(subst _,.,$(FULL_MACHINE_ID))
 FULL_MACHINE_ID_UNDER=$(subst .,_,$(FULL_MACHINE_ID))
+
