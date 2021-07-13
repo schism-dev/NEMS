@@ -25,6 +25,7 @@ exe/*
 # Fortran module files
 *.mod
 *.smod
+*.tmp.f90
 
 # Compiled Static libraries
 *.lai
@@ -38,7 +39,11 @@ __pycache__
 
 # intermediate build files
 src/MAIN_NEMS.tmp.f90
+src/ESMFVersionDefine.h
+src/conf/configure.nems
 src/conf/configure.nems.NUOPC
+src/conf/externals.nems
+src/conf/modules.nems
 src/conf/modules.nems.csh
 src/conf/modules.nems.sh
 src/conf/test-results.mk
