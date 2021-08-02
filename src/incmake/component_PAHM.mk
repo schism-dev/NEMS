@@ -15,6 +15,7 @@ all_component_mk_files+=$(pahm_mk)
 # Location of source code and installation
 PAHM_SRCDIR?=$(ROOTDIR)/PAHM
 PAHM_BINDIR?=$(ROOTDIR)/PAHM_INSTALL
+NUOPC_SRCDIR?=$(ROOTDIR)/PAHM/nuopc
 
 # Make sure the expected directories exist and are non-empty:
 $(call require_dir,$(PAHM_SRCDIR),PAHM source directory)
@@ -26,14 +27,14 @@ $(call require_dir,$(PAHM_SRCDIR),PAHM source directory)
 build_PAHM: $(pahm_mk)
 
 $(pahm_mk):
-	+cd $(PAHM_SRCDIR); exec ./build.sh --compiler=$(NEMS_COMPILER) --plat=$(NEMS_PLATFORM) \
-	   --parallel=${NEMS_PARALLEL} --prefix=$(PAHM_BINDIR) --verbose=1
-#	+cd $(PAHM_SRCDIR); exec ./build.sh --compiler=$(NEMS_COMPILER) --plat=$(NEMS_PLATFORM) \
-#	   --prefix=$(PAHM_BINDIR) --verbose=1
+	+cd $(PAHM_SRCDIR); exec ./build.sh --compiler=$(NEMS_COMPILER) --plat=$(NEMS_PLATFORM) --parallel=$(NEMS_PARALLEL) \
+	   --prefix=$(PAHM_BINDIR) --cmake_flags="-DCMAKE_INSTALL_BINDIR=$(PAHM_BINDIR) -DCMAKE_INSTALL_LIBDIR=$(PAHM_BINDIR)" \
+	   --verbose=1
 	@if [ $$? -eq 0 ]; \
 	then \
-	  cd $(PAHM_SRCDIR)/nuopc; exec $(MAKE) nuopcinstall \
-	     DESTDIR=/ "INSTDIR=$(PAHM_BINDIR)"; \
+	  cd $(NUOPC_SRCDIR); \
+          cp -fp Makefile.in Makefile; \
+          exec $(MAKE) install DESTDIR=/ "INSTDIR=$(PAHM_BINDIR)"; \
 	  echo ""; \
 	  test -d "$(PAHM_BINDIR)"; \
 	  echo ""; \
@@ -49,11 +50,11 @@ $(pahm_mk):
 # Rule for cleaning the SRCDIR and BINDIR:
 
 clean_PAHM_NUOPC:
-	+cd $(PAHM_SRCDIR)/nuopc; exec $(MAKE) nuopcclean
+	+cd $(NUOPC_SRCDIR); exec $(MAKE) clean
 	@echo ""
 
 distclean_PAHM_NUOPC:
-	+cd $(PAHM_SRCDIR)/nuopc; exec $(MAKE) nuopcdistclean
+	+cd $(NUOPC_SRCDIR); exec $(MAKE) distclean
 	@echo ""
 
 clean_PAHM: clean_PAHM_NUOPC
