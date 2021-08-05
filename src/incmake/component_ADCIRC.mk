@@ -7,7 +7,7 @@ all_component_mk_files+=$(adcirc_mk)
 # Location of source code and installation
 ADCIRC_SRCDIR?=$(ROOTDIR)/ADCIRC
 ADCIRC_BINDIR?=$(ROOTDIR)/ADCIRC_INSTALL
-NUOPC_SRCDIR?=$(ROOTDIR)/ADCIRC/thirdparty/nuopc
+ADCIRC_NUOPC_SRCDIR?=$(ROOTDIR)/ADCIRC/thirdparty/nuopc
 
 # Make sure the expected directories exist and are non-empty:
 $(call require_dir,$(ADCIRC_SRCDIR),ADCIRC source directory)
@@ -29,8 +29,8 @@ build_ADCIRC: $(adcirc_mk)
 
 
 $(adcirc_mk): configure $(CONFDIR)/configure.nems   
-	+$(MODULE_LOGIC) ; cd $(NUOPC_SRCDIR); exec ./make_nuopc.sh $(comp_option)
-	+$(MODULE_LOGIC) ; cd $(NUOPC_SRCDIR) ; exec $(MAKE) $(ADCIRC_ALL_OPTS) -f makefile.adc_cap.nuopc nuopcinstall \
+	+$(MODULE_LOGIC) ; cd $(ADCIRC_NUOPC_SRCDIR); exec ./make_nuopc.sh $(comp_option)
+	+$(MODULE_LOGIC) ; cd $(ADCIRC_NUOPC_SRCDIR) ; exec $(MAKE) $(ADCIRC_ALL_OPTS) -f makefile.adc_cap.nuopc nuopcinstall \
           DESTDIR=/ "INSTDIR=$(ADCIRC_BINDIR)"
 	@echo ""
 	test -d "$(ADCIRC_BINDIR)"
@@ -43,11 +43,11 @@ $(adcirc_mk): configure $(CONFDIR)/configure.nems
 # Rule for cleaning the SRCDIR and BINDIR:
 
 clean_ADCIRC_NUOPC:
-	+cd $(NUOPC_SRCDIR); exec rm -f *.o *.mod
+	+cd $(ADCIRC_NUOPC_SRCDIR); exec rm -f *.o *.mod
 	@echo ""
 
 distclean_ADCIRC_NUOPC: clean_ADCIRC_NUOPC
-	+cd $(NUOPC_SRCDIR) ; exec rm -f libadc_cap.a adcirc.mk
+	+cd $(ADCIRC_NUOPC_SRCDIR) ; exec rm -f libadc_cap.a adcirc.mk
 	@echo ""
 
 clean_ADCIRC: clean_ADCIRC_NUOPC

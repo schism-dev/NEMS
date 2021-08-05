@@ -15,7 +15,7 @@ all_component_mk_files+=$(pahm_mk)
 # Location of source code and installation
 PAHM_SRCDIR?=$(ROOTDIR)/PAHM
 PAHM_BINDIR?=$(ROOTDIR)/PAHM_INSTALL
-NUOPC_SRCDIR?=$(ROOTDIR)/PAHM/nuopc
+PAHM_NUOPC_SRCDIR?=$(ROOTDIR)/PAHM/nuopc
 
 # Make sure the expected directories exist and are non-empty:
 $(call require_dir,$(PAHM_SRCDIR),PAHM source directory)
@@ -32,7 +32,7 @@ $(pahm_mk):
 	   --verbose=1
 	@if [ $$? -eq 0 ]; \
 	then \
-	  cd $(NUOPC_SRCDIR); \
+	  cd $(PAHM_NUOPC_SRCDIR); \
           cp -fp Makefile.in Makefile; \
           exec $(MAKE) install DESTDIR=/ "INSTDIR=$(PAHM_BINDIR)"; \
 	  echo ""; \
@@ -50,11 +50,11 @@ $(pahm_mk):
 # Rule for cleaning the SRCDIR and BINDIR:
 
 clean_PAHM_NUOPC:
-	+cd $(NUOPC_SRCDIR); exec $(MAKE) clean
+	+cd $(PAHM_NUOPC_SRCDIR); exec $(MAKE) clean
 	@echo ""
 
 distclean_PAHM_NUOPC:
-	+cd $(NUOPC_SRCDIR); exec $(MAKE) distclean
+	+cd $(PAHM_NUOPC_SRCDIR); exec $(MAKE) distclean
 	@echo ""
 
 clean_PAHM: clean_PAHM_NUOPC
