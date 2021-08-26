@@ -34,6 +34,7 @@ $(pahm_mk):
 	then \
 	  cd $(PAHM_NUOPC_SRCDIR); \
           cp -fp Makefile.in Makefile; \
+          export PAHM_BINDIR=$(PAHM_BINDIR); \
           exec $(MAKE) install DESTDIR=/ "INSTDIR=$(PAHM_BINDIR)"; \
 	  echo ""; \
 	  test -d "$(PAHM_BINDIR)"; \
