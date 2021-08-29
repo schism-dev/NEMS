@@ -28,9 +28,9 @@ ADCIRC_ALL_OPTS= \
 build_ADCIRC: $(adcirc_mk)
 
 
-$(adcirc_mk): configure $(CONFDIR)/configure.nems   
+$(adcirc_mk): configure $(CONFDIR)/configure.nems
 	+$(MODULE_LOGIC) ; cd $(ADCIRC_NUOPC_SRCDIR); exec ./make_nuopc.sh $(comp_option)
-	+$(MODULE_LOGIC) ; cd $(ADCIRC_NUOPC_SRCDIR) ; exec $(MAKE) $(ADCIRC_ALL_OPTS) -f makefile.adc_cap.nuopc nuopcinstall \
+	+$(MODULE_LOGIC) ; cd $(ADCIRC_NUOPC_SRCDIR) ; exec $(MAKE) $(ADCIRC_ALL_OPTS) nuopcinstall \
           DESTDIR=/ "INSTDIR=$(ADCIRC_BINDIR)"
 	@echo ""
 	test -d "$(ADCIRC_BINDIR)"

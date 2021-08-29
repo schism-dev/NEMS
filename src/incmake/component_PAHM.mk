@@ -50,11 +50,18 @@ $(pahm_mk):
 
 # Rule for cleaning the SRCDIR and BINDIR:
 
-clean_PAHM_NUOPC:
+nuopc_makefile:
+	@if [ ! -f $(PAHM_NUOPC_SRCDIR)/Makefile ]; \
+	then \
+	  cd $(PAHM_NUOPC_SRCDIR); \
+	  cp -fp Makefile.in Makefile; \
+	fi
+
+clean_PAHM_NUOPC: nuopc_makefile
 	+cd $(PAHM_NUOPC_SRCDIR); exec $(MAKE) clean
 	@echo ""
 
-distclean_PAHM_NUOPC:
+distclean_PAHM_NUOPC: nuopc_makefile
 	+cd $(PAHM_NUOPC_SRCDIR); exec $(MAKE) distclean
 	@echo ""
 
