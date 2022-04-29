@@ -27,6 +27,9 @@ endif
 ifeq ($(ESMF_CCOMPILER),$(ESMF_CXXCOMPILER))
 ESMF_CCOMPILER:=$(subst mpicpc,mpicc,$(ESMF_CXXCOMPILER))
 endif
+ifeq ($(ESMF_CCOMPILER),$(ESMF_CXXCOMPILER))
+ESMF_CCOMPILER:=$(subst mpic++,mpicc,$(ESMF_CXXCOMPILER))
+endif
 
 # Location of the ESMF makefile fragment for this component:
 schism_mk = $(SCHISM_BINDIR)/schism.mk
