@@ -29,7 +29,7 @@ build_PAHM: $(pahm_mk)
 $(pahm_mk):
 	+cd $(PAHM_SRCDIR); exec ./build.sh --compiler=$(NEMS_COMPILER) --plat=$(NEMS_PLATFORM) --parallel=$(NEMS_PARALLEL) \
 	   --prefix=$(PAHM_BINDIR) --cmake_flags="-DCMAKE_INSTALL_BINDIR=$(PAHM_BINDIR) -DCMAKE_INSTALL_LIBDIR=$(PAHM_BINDIR)" \
-	   --verbose=1
+	   --verbose=1 --yes=$(ACCEPT_ALL)
 	@if [ $$? -eq 0 ]; \
 	then \
 	  cd $(PAHM_NUOPC_SRCDIR); \
@@ -66,10 +66,10 @@ distclean_PAHM_NUOPC: nuopc_makefile
 	@echo ""
 
 clean_PAHM: clean_PAHM_NUOPC
-	+cd $(PAHM_SRCDIR); exec ./build.sh --clean=1
+	+cd $(PAHM_SRCDIR); exec ./build.sh --clean=1 --yes=$(ACCEPT_ALL)
 	@echo ""
 
 distclean_PAHM: distclean_PAHM_NUOPC
-	+cd $(PAHM_SRCDIR); exec ./build.sh --clean=2
+	+cd $(PAHM_SRCDIR); exec ./build.sh --clean=2 --yes=$(ACCEPT_ALL)
 	rm -rf $(PAHM_BINDIR)
 	@echo ""
